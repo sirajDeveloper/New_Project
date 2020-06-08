@@ -1,13 +1,51 @@
 package service;
 
+import dao.UserDAOImpl;
 import model.User;
 
 import java.util.List;
 
-public interface UserServiceImpl {
-    void addUser(User user);
-    User getUserById(int id);
-    void deleteUser(int id);
-    void updateUser(User user);
-    List<User> getAllUsers();
+public class UserServiceImpl implements UserService {
+    private static UserServiceImpl userService;
+    private UserDAOImpl userDao;
+
+    public static UserServiceImpl getUserService() {
+        if (userService == null) {
+            userService = new UserServiceImpl();
+        }
+        return userService;
+    }
+
+    @Override
+    public void addUser(User user) {
+        userDao = new UserDAOImpl();
+        User userOfBd = userDao.getUserById(user.getId());
+        if (userOfBd == null) {
+            userDao.addUserDAO(user);
+        }
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return new UserDAOImpl().getUserById(id);
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        new UserDAOImpl().deleteUserDAO(id);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userDao = new UserDAOImpl();
+        User userOfBd = userDao.getUserById(user.getId());
+        if (userOfBd != null) {
+            userDao.updateUserDAO(user);
+        }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return new UserDAOImpl().getAllUsersDAO();
+    }
 }

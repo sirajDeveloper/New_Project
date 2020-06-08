@@ -1,7 +1,6 @@
 package servlet;
 
-import dao.UserDAO;
-import service.UserService;
+import service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,15 +13,13 @@ import java.io.IOException;
 public class UserDeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doDelete(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        int id = Integer.parseInt(req.getParameter("id"));
-        UserService.getUserService().deleteUser(id);
+        int id = 0;
+        try{
+            id = Integer.parseInt(req.getParameter("id"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        UserServiceImpl.getUserService().deleteUser(id);
         resp.sendRedirect("list");
-
     }
 }
