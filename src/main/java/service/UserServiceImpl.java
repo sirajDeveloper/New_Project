@@ -7,7 +7,7 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private static UserServiceImpl userService;
-    private UserDAOImpl userDao;
+    private UserDAOImpl userDao = new UserDAOImpl();
 
     public static UserServiceImpl getUserService() {
         if (userService == null) {
@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
-        userDao = new UserDAOImpl();
         User userOfBd = userDao.getUserById(user.getId());
         if (userOfBd == null) {
             userDao.addUserDAO(user);
@@ -37,7 +36,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        userDao = new UserDAOImpl();
         User userOfBd = userDao.getUserById(user.getId());
         if (userOfBd != null) {
             userDao.updateUserDAO(user);
