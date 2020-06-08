@@ -5,7 +5,7 @@ import model.User;
 
 import java.util.List;
 
-public class UserService {
+public class UserService implements UserServiceImpl{
     private static UserService userService;
     private UserDAO userDao;
 
@@ -16,30 +16,35 @@ public class UserService {
         return userService;
     }
 
-    public boolean addUser(User user) {
-        if (new UserDAO().addUserDAO(user)) {
-            return true;
+    @Override
+    public void addUser(User user) {
+        userDao = new UserDAO();
+        User userOfBd = userDao.getUserById(user.getId());
+        if (userOfBd == null) {
+            new UserDAO().addUserDAO(user);
         }
-        return false;
     }
 
+    @Override
     public User getUserById(int id) {
         return new UserDAO().getUserById(id);
     }
 
-    public boolean deleteUser(int id) {
-        return new UserDAO().deleteUserDAO(id);
+    @Override
+    public void deleteUser(int id) {
+        new UserDAO().deleteUserDAO(id);
     }
 
-    public boolean updateUser(User user) {
+    @Override
+    public void updateUser(User user) {
         userDao = new UserDAO();
         User userOfBd = userDao.getUserById(user.getId());
         if (userOfBd != null) {
             userDao.updateUserDAO(user);
         }
-        return false;
     }
 
+    @Override
     public List<User> getAllUsers() {
         return new UserDAO().getAllUsersDAO();
     }
