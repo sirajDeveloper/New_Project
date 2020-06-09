@@ -1,12 +1,11 @@
 package dao;
 
-import javafx.scene.control.TableRow;
 import model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import util.HibernateHelper;
+import util.DBHelper;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class UserHiberDAO implements UserDAO {
     private Session session;
 
     public UserHiberDAO() {
-        this.sessionFactory = HibernateHelper.getSessionFactory();
+        this.sessionFactory = DBHelper.getDBHelper().getSessionFactory();
     }
 
     @Override

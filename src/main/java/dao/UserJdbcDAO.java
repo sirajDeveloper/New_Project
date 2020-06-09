@@ -1,7 +1,7 @@
 package dao;
 
 import model.User;
-import util.JDBCHelper;
+import util.DBHelper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,13 +12,13 @@ public class UserJdbcDAO implements UserDAO {
     private Connection connection;
 
     public UserJdbcDAO() {
-        connection = JDBCHelper.getMysqlConnection();
+        connection = DBHelper.getDBHelper().getMysqlConnection();
     }
 
     @Override
     public List<User> getAllUsersDAO() {
         List<User> userList = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(JDBCHelper.SELECT_ALL_USERS)) {
+        try (PreparedStatement statement = connection.prepareStatement(DBHelper.SELECT_ALL_USERS)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 userList.add(new User(
@@ -35,7 +35,7 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void addUserDAO(User user) {
-        try (PreparedStatement statement = connection.prepareStatement(JDBCHelper.INSERT_USER)) {
+        try (PreparedStatement statement = connection.prepareStatement(DBHelper.INSERT_USER)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.executeUpdate();
@@ -46,7 +46,7 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void deleteUserDAO(Long id) {
-        try (PreparedStatement statement = connection.prepareStatement(JDBCHelper.DELETE_USERS)) {
+        try (PreparedStatement statement = connection.prepareStatement(DBHelper.DELETE_USERS)) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException throwables) {
@@ -56,7 +56,7 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void updateUserDAO(User newUser) {
-        try (PreparedStatement statement = connection.prepareStatement(JDBCHelper.UPDATE_USERS)) {
+        try (PreparedStatement statement = connection.prepareStatement(DBHelper.UPDATE_USERS)) {
             statement.setString(1, newUser.getName());
             statement.setString(2, newUser.getEmail());
             statement.setLong(3, newUser.getId());
@@ -69,7 +69,7 @@ public class UserJdbcDAO implements UserDAO {
     @Override
     public User getUserById(Long id) {
         User userOfBd = null;
-        try (PreparedStatement statement = connection.prepareStatement(JDBCHelper.SELECT_USER_BY_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement(DBHelper.SELECT_USER_BY_ID)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

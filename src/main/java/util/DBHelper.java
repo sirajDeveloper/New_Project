@@ -6,18 +6,49 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-import javax.imageio.spi.ServiceRegistry;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
+public class DBHelper {
+    private static final String URL = "jdbc:mysql://localhost:3306/user_table?useSSL=FALSE&serverTimezone=UTC";
+    private static final String LOGIN = "root";
+    private static final String PASSWORD = "ергпьфт";
 
-public class HibernateHelper {
+    public static final String INSERT_USER = "insert into user (name, email) values (?, ?)";
+    public static final String SELECT_USER_BY_ID = "select * from user where id = ?";
+    public static final String SELECT_USER = "select * from user where name = ?, email = ?";
+    public static final String SELECT_ALL_USERS = "select * from user";
+    public static final String DELETE_USERS = "delete from user where id = ?";
+    public static final String UPDATE_USERS = "update user set name = ?, email = ? where id = ?";
 
-    private static SessionFactory sessionFactory;
+    private static DBHelper helper;
+    private SessionFactory sessionFactory;
 
-    public static SessionFactory getSessionFactory() {
+    public static DBHelper getDBHelper() {
+        if (helper == null) {
+            helper = new DBHelper();
+        }
+        return helper;
+    }
+
+    public SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             sessionFactory = createSessionFactory();
         }
         return sessionFactory;
+    }
+
+    public Connection getMysqlConnection() {
+        Connection connection = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            connection = DriverManager.getConnection(URL, LOGIN, PASSWORD);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return connection;
     }
 
     private static Configuration getMysqlConfiguration() {
@@ -42,3 +73,4 @@ public class HibernateHelper {
         return configuration.buildSessionFactory(serviceRegistry);
     }
 }
+

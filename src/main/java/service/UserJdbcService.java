@@ -20,8 +20,7 @@ public class UserJdbcService implements UserService {
 
     @Override
     public void addUser(User user) {
-        User userOfBd = userDao.getUserById(user.getId());
-        if (userOfBd == null) {
+        if (user.getId() == null) {
             userDao.addUserDAO(user);
         }
     }
