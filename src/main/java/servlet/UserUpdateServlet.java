@@ -15,9 +15,9 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = 0;
+        Long id = 0L;
         try {
-            id = Integer.parseInt(req.getParameter("id"));
+            id = Long.parseLong(req.getParameter("id"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }

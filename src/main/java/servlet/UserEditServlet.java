@@ -15,9 +15,9 @@ import java.io.IOException;
 public class UserEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = 0;
+        Long id = 0L;
         try {
-            id = Integer.parseInt(req.getParameter("id"));
+            id = Long.parseLong(req.getParameter("id"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }

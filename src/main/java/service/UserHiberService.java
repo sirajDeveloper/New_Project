@@ -31,7 +31,7 @@ public class UserHiberService implements UserService {
     }
 
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(Long id) {
         userHiberDAO.deleteUserDAO(id);
     }
 
@@ -41,7 +41,7 @@ public class UserHiberService implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(Long id) {
         return userHiberDAO.getUserById(id);
     }
 }

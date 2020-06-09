@@ -39,7 +39,7 @@ public class UserHiberDAO implements UserDAO {
     }
 
     @Override
-    public void deleteUserDAO(int id) {
+    public void deleteUserDAO(Long id) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 /*
@@ -67,7 +67,7 @@ public class UserHiberDAO implements UserDAO {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(Long id) {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("FROM User where id = :id");

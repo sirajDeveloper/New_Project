@@ -22,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 userList.add(new User(
-                        resultSet.getInt("id"),
+                        resultSet.getLong("id"),
                         resultSet.getString("name"),
                         resultSet.getString("email")
                 ));
@@ -45,9 +45,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void deleteUserDAO(int id) {
+    public void deleteUserDAO(Long id) {
         try (PreparedStatement statement = connection.prepareStatement(JDBCHelper.DELETE_USERS)) {
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -59,7 +59,7 @@ public class UserDAOImpl implements UserDAO {
         try (PreparedStatement statement = connection.prepareStatement(JDBCHelper.UPDATE_USERS)) {
             statement.setString(1, newUser.getName());
             statement.setString(2, newUser.getEmail());
-            statement.setInt(3, newUser.getId());
+            statement.setLong(3, newUser.getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -67,10 +67,10 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(Long id) {
         User userOfBd = null;
         try (PreparedStatement statement = connection.prepareStatement(JDBCHelper.SELECT_USER_BY_ID)) {
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
