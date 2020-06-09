@@ -1,22 +1,22 @@
 package service;
 
-import dao.UserDAOImpl;
+import dao.UserJdbcDAO;
 import model.User;
 
 import java.util.List;
 
-public class UserServiceImpl implements UserService {
-    private static UserServiceImpl userService;
-    private UserDAOImpl userDao = new UserDAOImpl();
+public class UserJdbcService implements UserService {
+    private static UserJdbcService userService;
+    private UserJdbcDAO userDao = new UserJdbcDAO();
 
-    public static UserServiceImpl getUserService() {
+    public static UserJdbcService getUserService() {
         if (userService == null) {
-            userService = new UserServiceImpl();
+            userService = new UserJdbcService();
         }
         return userService;
     }
 
-    private UserServiceImpl() {}
+    private UserJdbcService() {}
 
     @Override
     public void addUser(User user) {

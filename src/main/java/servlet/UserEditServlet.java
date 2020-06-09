@@ -1,7 +1,7 @@
 package servlet;
 
 import model.User;
-import service.UserServiceImpl;
+import service.UserJdbcService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +21,7 @@ public class UserEditServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        User existUser = UserServiceImpl.getUserService().getUserById(id);
+        User existUser = UserJdbcService.getUserService().getUserById(id);
         RequestDispatcher dispatcher = req.getRequestDispatcher("user-form.jsp");
         req.setAttribute("user", existUser);
         dispatcher.forward(req, resp);

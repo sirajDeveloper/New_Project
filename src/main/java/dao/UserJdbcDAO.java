@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserDAOImpl implements UserDAO {
+public class UserJdbcDAO implements UserDAO {
     private Connection connection;
 
-    public UserDAOImpl() {
+    public UserJdbcDAO() {
         connection = JDBCHelper.getMysqlConnection();
     }
 
