@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBHelper {
+public class JDBCHelper {
     public static final String URL = "jdbc:mysql://localhost:3306/user_table?useSSL=false&serverTimezone=UTC";
     public static final String LOGIN = "root";
     public static final String PASSWORD = "ергпьфт";
