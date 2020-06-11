@@ -9,10 +9,14 @@ public class UserHiberDaoFactory implements DaoFactory {
     @Override
     public UserDAO createDAO() {
         String daoType = ApplicationConfiguration.getPropertyDAO();
-        String userDaoClassName = UserHiberDAO.class.getSimpleName();
-        if (userDaoClassName.equals(daoType)) {
-            return new UserHiberDAO();
+
+        switch (daoType) {
+            case "UserJdbcDAO":
+                return new UserJdbcDAO();
+            case "UserHiberDAO":
+                return new UserHiberDAO();
+            default:
+                return new UserJdbcDAO();
         }
-        return null;
     }
 }
