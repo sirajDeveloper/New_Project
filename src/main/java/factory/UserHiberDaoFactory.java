@@ -11,8 +11,6 @@ public class UserHiberDaoFactory implements DaoFactory {
         String daoType = ApplicationConfiguration.getPropertyDAO();
 
         switch (daoType) {
-            case "UserJdbcDAO":
-                return new UserJdbcDAO();
             case "UserHiberDAO":
                 return new UserHiberDAO();
             default:
