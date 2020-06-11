@@ -11,17 +11,9 @@ import java.util.Properties;
 public class UserDaoFactory implements DaoFactory {
 
     public UserDAO createDAO() {
-        Properties property = new Properties();
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream("src/main/resources/config.properties");
-            property.load(fis);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String dao = property.getProperty("daotype");
+        String daoType = ApplicationConfiguration.getPropertyDAO();
         UserDAO userDAO = null;
-        switch (dao) {
+        switch (daoType) {
             case "UserJdbcDAO":
                 userDAO = new UserJdbcDAO();
                 break;
