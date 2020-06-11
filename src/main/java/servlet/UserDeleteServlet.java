@@ -1,6 +1,6 @@
 package servlet;
 
-import service.UserJdbcService;
+import service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +19,7 @@ public class UserDeleteServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        UserJdbcService.getUserService().deleteUser(id);
+        UserServiceImpl.getUserService().deleteUser(id);
         resp.sendRedirect("list");
     }
 }

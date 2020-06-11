@@ -1,7 +1,7 @@
 package servlet;
 
 import model.User;
-import service.UserJdbcService;
+import service.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ public class UserShowServlet extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("user-form.jsp");
             dispatcher.forward(req, resp);
         } else {
-            List<User> listUser = UserJdbcService.getUserService().getAllUsers();
+            List<User> listUser = UserServiceImpl.getUserService().getAllUsers();
             req.setAttribute("listUser", listUser);
             RequestDispatcher dispatcher = req.getRequestDispatcher("user-list.jsp");
             dispatcher.forward(req, resp);

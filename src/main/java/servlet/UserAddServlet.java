@@ -1,7 +1,7 @@
 package servlet;
 
 import model.User;
-import service.UserJdbcService;
+import service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +17,7 @@ public class UserAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
-        UserJdbcService.getUserService().addUser(new User(name, email));
+        UserServiceImpl.getUserService().addUser(new User(name, email));
         resp.sendRedirect("list");
     }
 }

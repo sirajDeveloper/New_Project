@@ -15,13 +15,6 @@ public class DBHelper {
     private static final String LOGIN = "root";
     private static final String PASSWORD = "ергпьфт";
 
-    public static final String INSERT_USER = "insert into user (name, email) values (?, ?)";
-    public static final String SELECT_USER_BY_ID = "select * from user where id = ?";
-    public static final String SELECT_USER = "select * from user where name = ?, email = ?";
-    public static final String SELECT_ALL_USERS = "select * from user";
-    public static final String DELETE_USERS = "delete from user where id = ?";
-    public static final String UPDATE_USERS = "update user set name = ?, email = ? where id = ?";
-
     private static DBHelper helper;
     private SessionFactory sessionFactory;
 

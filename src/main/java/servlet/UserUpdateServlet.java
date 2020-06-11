@@ -1,7 +1,7 @@
 package servlet;
 
 import model.User;
-import service.UserJdbcService;
+import service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +23,7 @@ public class UserUpdateServlet extends HttpServlet {
         }
         String name = req.getParameter("name");
         String email = req.getParameter("email");
-        UserJdbcService.getUserService().updateUser(new User(id, name, email));
+        UserServiceImpl.getUserService().updateUser(new User(id, name, email));
         resp.sendRedirect("list");
     }
 }

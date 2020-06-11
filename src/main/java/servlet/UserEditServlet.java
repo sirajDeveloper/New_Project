@@ -1,7 +1,7 @@
 package servlet;
 
 import model.User;
-import service.UserJdbcService;
+import service.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,13 +15,13 @@ import java.io.IOException;
 public class UserEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long id = 0L;
+        long id = 0L;
         try {
             id = Long.parseLong(req.getParameter("id"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        User existUser = UserJdbcService.getUserService().getUserById(id);
+        User existUser = UserServiceImpl.getUserService().getUserById(id);
         RequestDispatcher dispatcher = req.getRequestDispatcher("user-form.jsp");
         req.setAttribute("user", existUser);
         dispatcher.forward(req, resp);

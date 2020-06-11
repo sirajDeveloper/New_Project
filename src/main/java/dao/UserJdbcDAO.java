@@ -17,8 +17,9 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public List<User> getAllUsersDAO() {
+        String query = "select * from user";
         List<User> userList = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(DBHelper.SELECT_ALL_USERS)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 userList.add(new User(
@@ -35,7 +36,8 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void addUserDAO(User user) {
-        try (PreparedStatement statement = connection.prepareStatement(DBHelper.INSERT_USER)) {
+        String query = "insert into user (name, email) values (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.executeUpdate();
@@ -46,7 +48,8 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void deleteUserDAO(Long id) {
-        try (PreparedStatement statement = connection.prepareStatement(DBHelper.DELETE_USERS)) {
+        String query = "delete from user where id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException throwables) {
@@ -56,7 +59,8 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void updateUserDAO(User newUser) {
-        try (PreparedStatement statement = connection.prepareStatement(DBHelper.UPDATE_USERS)) {
+        String query = "update user set name = ?, email = ? where id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, newUser.getName());
             statement.setString(2, newUser.getEmail());
             statement.setLong(3, newUser.getId());
@@ -68,8 +72,9 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public User getUserById(Long id) {
+        String query = "select * from user where id = ?";
         User userOfBd = null;
-        try (PreparedStatement statement = connection.prepareStatement(DBHelper.SELECT_USER_BY_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

@@ -5,18 +5,18 @@ import model.User;
 
 import java.util.List;
 
-public class UserJdbcService implements UserService {
-    private static UserJdbcService userService;
+public class UserServiceImpl implements UserService {
+    private static UserServiceImpl userService;
     private UserJdbcDAO userDao = new UserJdbcDAO();
 
-    public static UserJdbcService getUserService() {
+    public static UserServiceImpl getUserService() {
         if (userService == null) {
-            userService = new UserJdbcService();
+            userService = new UserServiceImpl();
         }
         return userService;
     }
 
-    private UserJdbcService() {}
+    private UserServiceImpl() {}
 
     @Override
     public void addUser(User user) {
