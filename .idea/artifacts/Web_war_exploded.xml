@@ -7,6 +7,7 @@
         <element id="directory" name="classes">
           <element id="module-output" name="Web" />
           <element id="module-output" name="New_Project" />
+          <element id="jpa-descriptors" facet="New_Project/jpa/JPA" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="mysql-connector-java-5.1.49-bin" />

@@ -25,7 +25,9 @@ public class UserJdbcDAO implements UserDAO {
                 userList.add(new User(
                         resultSet.getLong("id"),
                         resultSet.getString("name"),
-                        resultSet.getString("email")
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role")
                 ));
             }
         } catch (SQLException throwables) {
@@ -36,10 +38,12 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void addUserDAO(User user) {
-        String query = "insert into user (name, email) values (?, ?)";
+        String query = "insert into user (name, email, password, role) values (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getRole());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -59,11 +63,13 @@ public class UserJdbcDAO implements UserDAO {
 
     @Override
     public void updateUserDAO(User newUser) {
-        String query = "update user set name = ?, email = ? where id = ?";
+        String query = "update user set name = ?, email = ?, password = ?, role = ? where id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, newUser.getName());
             statement.setString(2, newUser.getEmail());
-            statement.setLong(3, newUser.getId());
+            statement.setString(3, newUser.getPassword());
+            statement.setString(4, newUser.getRole());
+            statement.setLong(5, newUser.getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -80,7 +86,31 @@ public class UserJdbcDAO implements UserDAO {
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
-                userOfBd = new User(id, name, email);
+                String password = resultSet.getString("password");
+                String role = resultSet.getString("role");
+                userOfBd = new User(id, name, email, password, role);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return userOfBd;
+    }
+
+    @Override
+    public User getRoleUserDAO(String userEmail, String userPassword) {
+        String query = "select * from user where email = ? and password = ?";
+        User userOfBd = null;
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, userEmail);
+            statement.setString(2, userPassword);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String role = resultSet.getString("role");
+                userOfBd = new User(id, name, email, password, role);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

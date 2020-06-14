@@ -5,7 +5,7 @@
 <html>
 
 <head>
-    <title>Java Mentor Students App</title>
+    <title>Java Mentor Users App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
@@ -14,11 +14,11 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark" style="background-color: orangered">
         <div>
-            <a href="https://javalearn.online/" class="navbar-brand"> Java Mentor Students App </a>
+            <a href="https://javalearn.online/" class="navbar-brand"> Java Users Users App </a>
         </div>
 
         <ul class="navbar-nav">
-            <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Студенты</a></li>
+            <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Пользователи</a></li>
         </ul>
     </nav>
 </header>
@@ -27,11 +27,11 @@
 <div class="row">
 
     <div class="container">
-        <h3 class="text-center">Список студентов</h3>
+        <h3 class="text-center">Список пользователей</h3>
         <hr>
         <div class="container text-left">
 
-            <a href="<%=request.getContextPath()%>/new" class="btn btn-success">Добавить новых студентов</a>
+            <a href="<%=request.getContextPath()%>/new" class="btn btn-success">Добавить новых пользователей</a>
         </div>
         <br>
         <table class="table table-bordered">
@@ -40,6 +40,8 @@
                 <th>ID</th>
                 <th>Имя</th>
                 <th>Email</th>
+                <th>Пароль</th>
+                <th>Доступ</th>
                 <th>Действия</th>
             </tr>
             </thead>
@@ -55,6 +57,12 @@
                     </td>
                     <td>
                         <c:out value="${user.email}" />
+                    </td>
+                    <td>
+                        <c:out value="${user.password}" />
+                    </td>
+                    <td>
+                        <c:out value="${user.role}" />
                     </td>
                     <td><a href="/edit?id=<c:out value='${user.id}' />">Редактировать</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/delete?id=<c:out value='${user.id}' />">Удалить</a></td>
                 </tr>

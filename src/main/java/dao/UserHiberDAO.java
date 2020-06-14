@@ -75,4 +75,16 @@ public class UserHiberDAO implements UserDAO {
         transaction.commit();
         return user;
     }
+
+    @Override
+    public User getRoleUserDAO(String email, String password) {
+        session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("FROM User where email = :email and password = :password");
+        query.setParameter("email", email);
+        query.setParameter("password", password);
+        User user = (User) query.list().get(0);
+        transaction.commit();
+        return user;
+    }
 }

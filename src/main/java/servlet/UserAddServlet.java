@@ -17,7 +17,9 @@ public class UserAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
-        UserServiceImpl.getUserService().addUser(new User(name, email));
+        String password = req.getParameter("password");
+        String role = req.getParameter("role");
+        UserServiceImpl.getUserService().addUser(new User(name, email, password, role));
         resp.sendRedirect("list");
     }
 }

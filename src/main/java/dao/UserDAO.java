@@ -10,4 +10,5 @@ public interface UserDAO {
     void deleteUserDAO(Long id);
     void updateUserDAO(User newUser);
     User getUserById(Long id);
+    User getRoleUserDAO(String email, String password);
 }

@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <title>Java Mentor Students App</title>
+    <title>Java Mentor Users App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
@@ -13,11 +13,11 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark" style="background-color: orangered">
         <div>
-            <a href="https://javalearn.online/" class="navbar-brand"> Java Mentor Students App </a>
+            <a href="https://javalearn.online/" class="navbar-brand"> Java Mentor Users App </a>
         </div>
 
         <ul class="navbar-nav">
-            <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Студенты</a></li>
+            <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Пользователи</a></li>
         </ul>
     </nav>
 </header>
@@ -35,10 +35,10 @@
                     <caption>
                         <h2>
                             <c:if test="${user != null}">
-                                Редактировать студента
+                                Редактировать пользователя
                             </c:if>
                             <c:if test="${user == null}">
-                                Добавить нового студента
+                                Добавить нового пользователя
                             </c:if>
                         </h2>
                     </caption>
@@ -52,8 +52,20 @@
                     </fieldset>
 
                     <fieldset class="form-group">
-                        <label>Email</label> <input type="text" value="<c:out value='${user.email}' />" class="form-control" name="email">
+                        <label>Email</label> <input type="text" value="<c:out value='${user.email}' />" class="form-control" name="email" required>
                     </fieldset>
+
+                    <fieldset class="form-group">
+                        <label>Пароль</label> <input type="text" value="<c:out value='${user.password}' />" class="form-control" name="password" required>
+                    </fieldset>
+
+                        <fieldset class="form-group">
+                            <label>Доступ</label>
+                            <p>user <input type="radio" value="<c:out value="user" />" class="form-control" name="role"
+                                <c:if test="${user.role == 'user'}"> checked></p>
+                            <p>admin <input type="radio" value="<c:out value="admin" />" class="form-control" name="role"
+                                <c:if test="${user.role == 'admin'}"> checked></p>
+                        </fieldset>
 
                     <button type="submit" class="btn btn-success">Сохранить</button>
                 </form>
