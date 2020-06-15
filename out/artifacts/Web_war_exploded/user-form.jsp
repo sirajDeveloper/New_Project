@@ -61,10 +61,8 @@
 
                         <fieldset class="form-group">
                             <label>Доступ</label>
-                            <p>user <input type="radio" value="<c:out value="user" />" class="form-control" name="role"
-                                <c:if test="${user.role == 'user'}"> checked></p>
-                            <p>admin <input type="radio" value="<c:out value="admin" />" class="form-control" name="role"
-                                <c:if test="${user.role == 'admin'}"> checked></p>
+                            <p>user <input type="radio" value="<c:out value="user" />" class="form-control" name="role">
+                            <p>admin <input type="radio" value="<c:out value="admin" />" class="form-control" name="role">
                         </fieldset>
 
                     <button type="submit" class="btn btn-success">Сохранить</button>

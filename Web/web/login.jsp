@@ -13,7 +13,7 @@
     <title>Form</title>
 </head>
 <body>
-<form action="/auth" method="POST">
+<form action="/login" method="POST">
     <h1>Email:</h1> <input type="text" name="email" required><br>
     <h1>Пароль:</h1> <input type="text" name="password" required><br>
     <button><div>Отправить</div></button>

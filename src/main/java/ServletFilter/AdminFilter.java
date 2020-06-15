@@ -14,17 +14,23 @@ public class AdminFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+
         HttpSession session = request.getSession(false);
-        boolean loggedIn = session != null && session.getAttribute("userRole") != null;
-        if (loggedIn) {
-            String userRole = session.getAttribute("userRole").toString();
-            if (userRole.equals("user")) {
-                response.sendRedirect(request.getContextPath() + "/user.jsp");
-            } else if (userRole.equals("admin")) {
-                response.sendRedirect(request.getContextPath() + "/admin/user-list.jsp");
-            }
+
+        boolean isLoggedIn = (session != null && session.getAttribute("admin") != null);
+
+        String loginURI =  request.getContextPath() + "/admin/login";
+
+        boolean isLoginRequest = request.getRequestURI().equals(loginURI);
+
+        boolean isLoginPage = request.getRequestURI().endsWith("login.jsp");
+
+        if (isLoggedIn && (isLoginRequest || isLoginPage)) {
+            request.getRequestDispatcher("/admin/").forward(request, response);
+        } else if (isLoggedIn || isLoginRequest) {
+            filterChain.doFilter(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + "/user.jsp");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }
