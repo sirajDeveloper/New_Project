@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/insert")
+@WebServlet("/admin/insert")
 public class UserAddServlet extends HttpServlet {
     
     @Override
@@ -21,6 +21,6 @@ public class UserAddServlet extends HttpServlet {
         String password = req.getParameter("password");
         String role = req.getParameter("role");
         UserServiceImpl.getUserService().addUser(new User(name, email, password, role));
-        resp.sendRedirect("list");
+        resp.sendRedirect("/admin");
     }
 }

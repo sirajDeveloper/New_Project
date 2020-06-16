@@ -16,9 +16,8 @@ import java.util.List;
 public class UserShowServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getServletPath().contains("/new")) {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("user-form.jsp");
-            dispatcher.forward(req, resp);
+        if (req.getServletPath().contains("admin/new")) {
+            resp.sendRedirect("/user-form.jsp");
         } else {
             List<User> listUser = UserServiceImpl.getUserService().getAllUsers();
             req.setAttribute("listUser", listUser);

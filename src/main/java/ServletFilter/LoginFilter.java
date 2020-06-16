@@ -13,7 +13,7 @@ import java.io.IOException;
 public class LoginFilter implements Filter {
     HttpServletRequest request;
 
-    private static final String[] loginRequiredURLs = {
+    private static final String[] securityURLs = {
             "/new", "/insert", "/update", "edit", "/delete"
     };
 
@@ -36,16 +36,16 @@ public class LoginFilter implements Filter {
         boolean isLoginPage = request.getRequestURI().endsWith("login.jsp");
         if (isLoggedIn && (isLoginRequest || isLoginPage)) {
             request.getRequestDispatcher("/").forward(request, response);
-        } else if (!isLoggedIn && isLoginRequired()) {
+        } else if (adminAccessURLs()) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             filterChain.doFilter(request, response);
         }
     }
 
-    private boolean isLoginRequired() {
+    private boolean adminAccessURLs() {
         String requestURL = request.getRequestURI();
-        for (String loginRequiredURL : loginRequiredURLs) {
+        for (String loginRequiredURL : securityURLs) {
             if (loginRequiredURL.contains(requestURL)) {
                 return true;
             }

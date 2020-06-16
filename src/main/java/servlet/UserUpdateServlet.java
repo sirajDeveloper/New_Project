@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/update")
+@WebServlet("/admin/update")
 public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         Long id = 0L;
         try {
             id = Long.parseLong(req.getParameter("id"));
@@ -26,6 +27,6 @@ public class UserUpdateServlet extends HttpServlet {
         String password = req.getParameter("password");
         String role = req.getParameter("role");
         UserServiceImpl.getUserService().updateUser(new User(id, name, email, password, role));
-        resp.sendRedirect("list");
+        resp.sendRedirect("/admin");
     }
 }

@@ -28,12 +28,20 @@ public class LoginServlet extends HttpServlet {
         User user = UserServiceImpl.getUserService().getRoleUser(login, password);
         if (user != null) {
             if (user.getRole().equals("user")) {
+                session.setAttribute("userId", user.getId());
+                session.setAttribute("userName", user.getName());
+                session.setAttribute("userEmail", user.getEmail());
+                session.setAttribute("userPassword", user.getPassword());
                 session.setAttribute("user", user.getRole());
-                req.getRequestDispatcher("/user.jsp").forward(req, resp);
+                resp.sendRedirect("/user");
             }
             if (user.getRole().equals("admin")) {
+                session.setAttribute("adminId", user.getId());
+                session.setAttribute("adminName", user.getName());
+                session.setAttribute("adminEmail", user.getEmail());
+                session.setAttribute("adminPassword", user.getPassword());
                 session.setAttribute("admin", user.getRole());
-                req.getRequestDispatcher("admin/user-list.jsp").forward(req, resp);
+                resp.sendRedirect("/admin");
             }
         } else {
             req.getRequestDispatcher("login.jsp").forward(req, resp);

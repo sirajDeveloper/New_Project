@@ -17,7 +17,7 @@
         </div>
 
         <ul class="navbar-nav">
-            <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Пользователи</a></li>
+            <li><a href="<%=request.getContextPath()%>/admin" class="nav-link">Пользователи</a></li>
         </ul>
     </nav>
 </header>
@@ -26,10 +26,10 @@
     <div class="card">
         <div class="card-body">
             <c:if test="${user != null}">
-            <form action="update" method="post">
+            <form action="/admin/update" method="post">
                 </c:if>
                 <c:if test="${user == null}">
-                <form action="insert" method="post">
+                <form action="/admin/insert" method="post">
                     </c:if>
 
                     <caption>

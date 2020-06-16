@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -18,7 +18,7 @@
         </div>
 
         <ul class="navbar-nav">
-            <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Пользователи</a></li>
+            <li><a href="<%=request.getContextPath()%>/admin" class="nav-link">Пользователи</a></li>
         </ul>
     </nav>
 </header>
@@ -31,7 +31,7 @@
         <hr>
         <div class="container text-left">
 
-            <a href="<%=request.getContextPath()%>/new" class="btn btn-success">Добавить новых пользователей</a>
+            <a href="<%=request.getContextPath()%>/admin/new" class="btn btn-success">Добавить новых пользователей</a>
         </div>
         <br>
         <table class="table table-bordered">
@@ -64,7 +64,7 @@
                     <td>
                         <c:out value="${user.role}" />
                     </td>
-                    <td><a href="/edit?id=<c:out value='${user.id}' />">Редактировать</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/delete?id=<c:out value='${user.id}' />">Удалить</a></td>
+                    <td><a href="/edit?id=<c:out value='${user.id}' />">Редактировать</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/admin/delete?id=<c:out value='${user.id}' />">Удалить</a></td>
                 </tr>
             </c:forEach>
 

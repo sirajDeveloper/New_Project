@@ -22,8 +22,7 @@ public class UserEditServlet extends HttpServlet {
             e.printStackTrace();
         }
         User existUser = UserServiceImpl.getUserService().getUserById(id);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("user-form.jsp");
         req.setAttribute("user", existUser);
-        dispatcher.forward(req, resp);
+        req.getRequestDispatcher("user-form.jsp").forward(req, resp);
     }
 }
