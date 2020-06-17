@@ -27,20 +27,16 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
         User user = UserServiceImpl.getUserService().getRoleUser(login, password);
         if (user != null) {
+            session.setAttribute("userId", user.getId());
+            session.setAttribute("userName", user.getName());
+            session.setAttribute("userEmail", user.getEmail());
+            session.setAttribute("userPassword", user.getPassword());
+            session.setAttribute("userRole", user.getRole());
+
             if (user.getRole().equals("user")) {
-                session.setAttribute("userId", user.getId());
-                session.setAttribute("userName", user.getName());
-                session.setAttribute("userEmail", user.getEmail());
-                session.setAttribute("userPassword", user.getPassword());
-                session.setAttribute("user", user.getRole());
                 resp.sendRedirect("/user");
             }
             if (user.getRole().equals("admin")) {
-                session.setAttribute("adminId", user.getId());
-                session.setAttribute("adminName", user.getName());
-                session.setAttribute("adminEmail", user.getEmail());
-                session.setAttribute("adminPassword", user.getPassword());
-                session.setAttribute("admin", user.getRole());
                 resp.sendRedirect("/admin");
             }
         } else {

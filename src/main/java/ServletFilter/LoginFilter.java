@@ -1,5 +1,6 @@
 package ServletFilter;
 
+import model.User;
 import service.UserServiceImpl;
 
 import javax.servlet.*;
@@ -11,45 +12,21 @@ import java.io.IOException;
 
 @WebFilter("/*")
 public class LoginFilter implements Filter {
-    HttpServletRequest request;
-
-    private static final String[] securityURLs = {
-            "/new", "/insert", "/update", "edit", "/delete"
-    };
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        request = (HttpServletRequest) servletRequest;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        String path = request.getRequestURI().substring(request.getContextPath().length());
-        if (path.startsWith("/admin/")) {
+        HttpSession session = request.getSession();
+
+        boolean isAuth = session.getAttribute("userRole") != null && session.getAttribute("userId") != null;
+        boolean isLogin = request.getRequestURI().equals("/login");
+
+        if (isAuth || isLogin) {
             filterChain.doFilter(request, response);
-            return;
-        }
-
-        HttpSession session = request.getSession(false);
-
-        String loginURI = request.getContextPath() + "/login";
-        boolean isLoggedIn = (session != null && session.getAttribute("user") != null);
-        boolean isLoginRequest = request.getRequestURI().equals(loginURI);
-        boolean isLoginPage = request.getRequestURI().endsWith("login.jsp");
-        if (isLoggedIn && (isLoginRequest || isLoginPage)) {
-            request.getRequestDispatcher("/").forward(request, response);
-        } else if (adminAccessURLs()) {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
-            filterChain.doFilter(request, response);
+            response.sendRedirect("/login");
         }
-    }
-
-    private boolean adminAccessURLs() {
-        String requestURL = request.getRequestURI();
-        for (String loginRequiredURL : securityURLs) {
-            if (loginRequiredURL.contains(requestURL)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

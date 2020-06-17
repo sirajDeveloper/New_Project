@@ -15,22 +15,16 @@ public class AdminFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
 
-        boolean isLoggedIn = (session != null && session.getAttribute("admin") != null);
+        boolean isAuth = session.getAttribute("userRole") != null
+                && session.getAttribute("userId") != null;
+        boolean hasAdmin = session.getAttribute("userRole").equals("admin");
 
-        String loginURI =  request.getContextPath() + "/admin/login";
-
-        boolean isLoginRequest = request.getRequestURI().equals(loginURI);
-
-        boolean isLoginPage = request.getRequestURI().endsWith("login.jsp");
-
-        if (isLoggedIn && (isLoginRequest || isLoginPage)) {
-            request.getRequestDispatcher("/admin/").forward(request, response);
-        } else if (isLoggedIn || isLoginRequest) {
+        if (isAuth && hasAdmin) {
             filterChain.doFilter(request, response);
         } else {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            response.sendRedirect("/user");
         }
     }
 }
