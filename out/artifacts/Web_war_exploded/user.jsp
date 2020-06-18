@@ -11,10 +11,9 @@
     <title>Title</title>
 </head>
 <body>
-${userId}
-${userName}
-${userEmail}
-${userPassword}
-${user}
+${userObject.id}
+${userObject.name}
+${userObject.email}
+${userObject.password}
 </body>
 </html>

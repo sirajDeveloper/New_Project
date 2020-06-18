@@ -27,12 +27,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
         User user = UserServiceImpl.getUserService().getRoleUser(login, password);
         if (user != null) {
-            session.setAttribute("userId", user.getId());
-            session.setAttribute("userName", user.getName());
-            session.setAttribute("userEmail", user.getEmail());
-            session.setAttribute("userPassword", user.getPassword());
-            session.setAttribute("userRole", user.getRole());
-
+            session.setAttribute("userObject", user);
             if (user.getRole().equals("user")) {
                 resp.sendRedirect("/user");
             }

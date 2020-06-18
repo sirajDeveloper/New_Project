@@ -1,4 +1,6 @@
-package ServletFilter;
+package filterServlet;
+
+import model.User;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,14 +16,17 @@ public class AdminFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-
+        User user = null;
         HttpSession session = request.getSession();
 
-        boolean isAuth = session.getAttribute("userRole") != null
-                && session.getAttribute("userId") != null;
-        boolean hasAdmin = session.getAttribute("userRole").equals("admin");
+        if (session.getAttribute("userObject") != null) {
+            user = (User) session.getAttribute("userObject");
+        }
 
-        if (isAuth && hasAdmin) {
+        assert user != null;
+        boolean hasAdmin = user.getRole().equals("admin");
+
+        if (hasAdmin) {
             filterChain.doFilter(request, response);
         } else {
             response.sendRedirect("/user");

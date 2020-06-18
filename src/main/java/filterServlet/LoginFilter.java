@@ -1,7 +1,4 @@
-package ServletFilter;
-
-import model.User;
-import service.UserServiceImpl;
+package filterServlet;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -20,7 +17,7 @@ public class LoginFilter implements Filter {
 
         HttpSession session = request.getSession();
 
-        boolean isAuth = session.getAttribute("userRole") != null && session.getAttribute("userId") != null;
+        boolean isAuth = session.getAttribute("userObject") != null;
         boolean isLogin = request.getRequestURI().equals("/login");
 
         if (isAuth || isLogin) {
