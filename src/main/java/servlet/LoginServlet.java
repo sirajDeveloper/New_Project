@@ -22,20 +22,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("email");
-        String password = req.getParameter("password");
-        HttpSession session = req.getSession();
-        User user = UserServiceImpl.getUserService().getRoleUser(login, password);
-        if (user != null) {
-            session.setAttribute("userObject", user);
-            if (user.getRole().equals("user")) {
-                resp.sendRedirect("/user");
-            }
-            if (user.getRole().equals("admin")) {
-                resp.sendRedirect("/admin");
-            }
-        } else {
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
-        }
+        req.getRequestDispatcher("login.jsp").forward(req, resp);
     }
 }

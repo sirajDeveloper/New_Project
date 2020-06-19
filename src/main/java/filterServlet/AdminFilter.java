@@ -19,12 +19,12 @@ public class AdminFilter implements Filter {
         User user = null;
         HttpSession session = request.getSession();
 
+        boolean hasAdmin = false;
         if (session.getAttribute("userObject") != null) {
             user = (User) session.getAttribute("userObject");
+            hasAdmin = user.getRole().equals("admin");
         }
 
-        assert user != null;
-        boolean hasAdmin = user.getRole().equals("admin");
 
         if (hasAdmin) {
             filterChain.doFilter(request, response);
