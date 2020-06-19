@@ -1,7 +1,6 @@
 package filterServlet;
 
 import model.User;
-import service.UserServiceImpl;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -10,41 +9,34 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/*")
+@WebFilter("/login")
 public class LoginFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        HttpServletResponse resp = (HttpServletResponse) servletResponse;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        HttpSession session = req.getSession();
-        boolean isLogin = req.getRequestURI().equals("/login");
+        HttpSession session = request.getSession();
         boolean isAuth = session.getAttribute("userObject") != null;
-        boolean isAdminRole = false;
-        boolean isUserRole = false;
+        boolean isLogin = request.getRequestURI().equals("/login");
         User user = null;
-        if (!isAuth) {
-            String login = req.getParameter("email");
-            String password = req.getParameter("password");
-            user = UserServiceImpl.getUserService().getRoleUser(login, password);
-            session.setAttribute("userObject", user);
-        }
+        boolean isUserRole = false;
+        boolean isAdminRole = false;
         if (isAuth) {
             user = (User) session.getAttribute("userObject");
-            isAdminRole = user.getRole().equals("admin");
             isUserRole = user.getRole().equals("user");
-            filterChain.doFilter(req, resp);
+            isAdminRole = user.getRole().equals("admin");
         }
-        if (user != null) {
-            if (user.getRole().equals("user")) {
-                resp.sendRedirect("/user");
-            }
-            if (user.getRole().equals("admin")) {
-                resp.sendRedirect("/admin");
-            }
-        } else {
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
+
+        if (isAdminRole) {
+            response.sendRedirect("/admin");
+        }
+        else if (isUserRole) {
+            response.sendRedirect("/user");
+        }
+        else {
+        response.sendRedirect("/login");
         }
     }
 }
